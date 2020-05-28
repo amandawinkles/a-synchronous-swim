@@ -2,9 +2,33 @@
 
   const serverUrl = 'http://127.0.0.1:3000';
 
-  //
-  // TODO: build the swim command fetcher here
-  //
+  // const swimDirections = ['up','down','left','right'];
+  // const getRandomCommands = () => {
+  //   return swimDirections[Math.floor(Math.random() * 4)];
+  // };
+
+  //build the swim command fetcher here
+  //setInterval to periodically request a random swim command from the server
+  //setInterval(() => {
+  const getSwimCommand = () => {
+    //build request that contacts server, asks for swim command, when command is passe dback to client, it's given to swim team
+    $.ajax({
+      url: serverUrl,
+      type: 'GET',
+      contentType: 'application/json',
+      success: (data) => {
+        SwimTeam.move(data);
+        console.log('successfully fetched swim command');
+      },
+      error: () => {
+        console.error('failed to fetch request');
+      }
+    })
+  }
+  //}, 100);
+
+  //getSwimCommand();
+
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
@@ -17,7 +41,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'FILL_ME_IN',
+      url: 'serverUrl',
       cache: false,
       contentType: false,
       processData: false,
@@ -47,3 +71,5 @@
   });
 
 })();
+
+//export default
