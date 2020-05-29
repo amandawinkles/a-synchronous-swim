@@ -13,7 +13,15 @@
       type: 'GET',
       url: serverUrl,
       success: (data) => {
-        SwimTeam.move(data)
+        console.log(data)
+
+        var commands = data.split(',')
+
+        _.each(commands, function(currentValue) {
+          SwimTeam.move(currentValue)
+        })
+
+        // SwimTeam.move(data);
         //console.log('successfully fetched swim command');
       },
       error: () => {console.error('Failed the fetch request')}
@@ -21,7 +29,7 @@
   }
 
   //we need to create/use an event system instead of getting random commands
-  setInterval(getRequest, 1000)
+  setInterval(getRequest, 3000)
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!

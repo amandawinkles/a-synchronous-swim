@@ -8,9 +8,10 @@ const messageQueue = require('./messageQueue');
 module.exports.backgroundImageFile = path.join('.', 'background.jpg');
 ////////////////////////////////////////////////////////
 
-let messageQueue = null;
+let messageQueueStart = null;
+
 module.exports.initialize = (queue) => {
-  messageQueue = queue;
+  messageQueueStart = queue;
 };
 
 var commands = ['up', 'left', 'right', 'down'];
@@ -24,8 +25,21 @@ module.exports.router = (req, res, next = ()=>{}) => { //request, response
 
   if (req.method === 'GET') {
     res.writeHead(200, headers);
-    res.end(randomSwimCommand()); //send messages array back here, call res.end w/messages
-    //dequeue messages
+    //response.write sends back a chunk of the responsive body, may be called multiple x to provide successive parts of the body, takes in chunk, possibly encoding, callback- returns a boolean
+    //loop through messages, messageQueue.dequeue() for each element in messages array
+    //if messageQueue.dequeue() returns undefined, res.end()
+    //assign var to dequeue to use it
+
+    for (var i = messageQueue.dequeue(); i !== undefined; i = messageQueue.dequeue()) {
+      res.write( i + ',');
+    }
+
+    // do {
+    //   i = i++;
+    //  i = messageQueue.dequeue()
+    // } while (i !== undefined)
+
+    res.end();
   } else if (req.method === 'OPTIONS') {
     res.writeHead(200, headers);
     res.end();
@@ -33,7 +47,8 @@ module.exports.router = (req, res, next = ()=>{}) => { //request, response
     res.writeHead(200, headers);
     res.end();
   } else {
-
+    res.writeHead(200, headers);
+    res.end();
   }
 
   next(); // invoke next() at the end of a request to help with testing!

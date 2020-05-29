@@ -51,6 +51,7 @@ module.exports.initialize = (callback) => {
       logKeypress('\n');
       if (message.length > 0) {
         callback(message);
+        messageQueue.enqueue(message);
         message = ''; // clear the buffer where we are collecting keystrokes
       }
     } else {
