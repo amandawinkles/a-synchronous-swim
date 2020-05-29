@@ -27,7 +27,9 @@
   }
   //}, 100);
 
-  //getSwimCommand();
+  $('.get-swim-command').on('click', function() {
+    getSwimCommand();
+  });
 
 
   /////////////////////////////////////////////////////////////////////

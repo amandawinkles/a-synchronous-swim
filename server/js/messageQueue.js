@@ -14,5 +14,9 @@ module.exports.dequeue = () => {
   }
 };
 
-export default messages;
+//export default messages;
 //module.exports.messages;
+
+module.exports.getMessages = () => {
+  return messages[0];
+};
