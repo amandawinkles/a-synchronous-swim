@@ -1,3 +1,5 @@
+
+
 (function() {
 
   const serverUrl = 'http://127.0.0.1:3000';
@@ -5,22 +7,22 @@
   //
   // TODO: build the swim command fetcher here
 
-  setInterval(() => {
+
+  //when keypress event, trigger GET request
+  const getRequest = function() {
     $.ajax({
       type: 'GET',
       url: serverUrl,
-      //contentType: 'application/json',
-
       success: (data) => {
         SwimTeam.move(data)
         //console.log('successfully fetched swim command');
       },
       error: () => {console.error('Failed the fetch request')}
     })
-  }, 1000)
+  }
 
-
-  //
+  //we need to create/use an event system instead of getting random commands
+  setInterval(getRequest, 1000)
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
