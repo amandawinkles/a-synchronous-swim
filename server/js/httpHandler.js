@@ -13,7 +13,7 @@ module.exports.initialize = (queue) => {
 };
 
 var commands = ['up', 'left', 'right', 'down'];
-var randomSwimCommand = function() {
+var randomSwimCommand = () => {
   return commands[Math.floor(Math.random() * 4)];
 }
 

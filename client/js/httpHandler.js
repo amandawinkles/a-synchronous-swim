@@ -4,6 +4,22 @@
 
   //
   // TODO: build the swim command fetcher here
+
+  setInterval(() => {
+    $.ajax({
+      type: 'GET',
+      url: serverUrl,
+      //contentType: 'application/json',
+
+      success: (data) => {
+        SwimTeam.move(data)
+        //console.log('successfully fetched swim command');
+      },
+      error: () => {console.error('Failed the fetch request')}
+    })
+  }, 1000)
+
+
   //
 
   /////////////////////////////////////////////////////////////////////
