@@ -1,5 +1,3 @@
-
-
 (function() {
 
   const serverUrl = 'http://127.0.0.1:3000';
@@ -9,6 +7,7 @@
 
 
   //when keypress event, trigger GET request
+  //in success, data will array, iterate through data array (or split if comes back as string), will call SwimTeam.move on each element
   const getRequest = function() {
     $.ajax({
       type: 'GET',

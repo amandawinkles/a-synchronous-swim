@@ -39,8 +39,11 @@ module.exports.initialize = (callback) => {
     // check to see if the keypress itself is a valid message
     if (isValidMessage(key.name)) {
       callback(key.name);
+      messageQueue.enqueue(key.name);
       return; // don't do any more processing on this key
     }
+
+    //[NOTE TO SELF FOR LATER] update to enqueue key for messageQueue
 
     // otherwise build up a message from individual characters
     if (key && (key.name === 'return' || key.name === 'enter')) {

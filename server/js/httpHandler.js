@@ -24,7 +24,8 @@ module.exports.router = (req, res, next = ()=>{}) => { //request, response
 
   if (req.method === 'GET') {
     res.writeHead(200, headers);
-    res.end(randomSwimCommand());
+    res.end(randomSwimCommand()); //send messages array back here, call res.end w/messages
+    //dequeue messages
   } else if (req.method === 'OPTIONS') {
     res.writeHead(200, headers);
     res.end();
