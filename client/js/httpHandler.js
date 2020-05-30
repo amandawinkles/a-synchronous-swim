@@ -4,7 +4,32 @@
 
   //
   // TODO: build the swim command fetcher here
-  //
+
+
+  //when keypress event, trigger GET request
+  //in success, data will array, iterate through data array (or split if comes back as string), will call SwimTeam.move on each element
+  const getRequest = function() {
+    $.ajax({
+      type: 'GET',
+      url: serverUrl,
+      success: (data) => {
+        console.log(data)
+
+        var commands = data.split(',')
+
+        _.each(commands, function(currentValue) {
+          SwimTeam.move(currentValue)
+        })
+
+        // SwimTeam.move(data);
+        //console.log('successfully fetched swim command');
+      },
+      error: () => {console.error('Failed the fetch request')}
+    })
+  }
+
+  //we need to create/use an event system instead of getting random commands
+  setInterval(getRequest, 3000)
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
