@@ -5,7 +5,7 @@ const multipart = require('./multipartUtils');
 const messageQueue = require('./messageQueue');
 
 // Path for the background image ///////////////////////
-module.exports.backgroundImageFile = path.join('.', 'background.jpg');
+module.exports.backgroundImageFile = path.join('.', 'background.jpg');//not being recognized as correct file path
 ////////////////////////////////////////////////////////
 
 let messageQueueStart = null;
@@ -46,8 +46,12 @@ module.exports.router = (req, res, next = ()=>{}) => { //request, response
       console.log(fs.existsSync(exports.backgroundImageFile));
 
       if (fs.existsSync(exports.backgroundImageFile)) {
-        res.writeHead(200, headers);
-        res.end(); //pass in background image file
+        var img = fs.readFileSync(exports.backgroundImageFile);
+        res.writeHead(200, {
+          'Content-Type': 'image/jpeg'
+          });
+        console.log(img);
+        res.end(img); //pass in background image file
         next();
       } else {
         res.writeHead(404, headers);

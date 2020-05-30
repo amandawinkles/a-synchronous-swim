@@ -9,10 +9,10 @@
 
   //when keypress event, trigger GET request
   //in success, data will array, iterate through data array (or split if comes back as string), will call SwimTeam.move on each element
-  const getRequest = function() { //get request for swim command
+  const getRequest = function(endpoint = '') { //get request for swim command
     $.ajax({
       type: 'GET',
-      url: serverUrl,
+      url: serverUrl + endpoint,
       success: (data) => {
         console.log(data)
 
@@ -30,7 +30,9 @@
   }
   //separate get request for background url
 
+
   //we need to create/use an event system instead of getting random commands
+  console.log(getRequest('/background.jpg'));
   setInterval(getRequest, 3000)
 
   /////////////////////////////////////////////////////////////////////
