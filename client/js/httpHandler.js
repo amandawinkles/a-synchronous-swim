@@ -11,7 +11,7 @@
   //setInterval to periodically request a random swim command from the server
   //setInterval(() => {
   const getSwimCommand = () => {
-    //build request that contacts server, asks for swim command, when command is passe dback to client, it's given to swim team
+    //build request that contacts server, asks for swim command, when command is passed back to client, it's given to swim team
     $.ajax({
       url: serverUrl,
       type: 'GET',

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const headers = require('./cors');
 const multipart = require('./multipartUtils');
-//const messageQueue = require('./messageQueue');
+const messageQueue = require('./messageQueue');
 
 // Path for the background image ///////////////////////
 module.exports.backgroundImageFile = path.join('.', 'background.jpg');
@@ -22,6 +22,24 @@ const getRandomCommands = () => {
 
 module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
+  /*
+  if (req.url === '/background.jpg') {
+    fs.readFile(module.exports.backgroundImageFile, (err, fileData) => {
+      if (err) {
+        res.writeHead(404);
+      } else {
+        res.writeHead(200, {
+          'Content-Type': 'image/jpeg',
+          'Content-Length': fileData.length
+        });
+        res.write(fileData, 'binary');
+      }
+      res.end();
+      next();
+    });
+  }
+
+  */
 
   // res.writeHead(200, headers);
   // res.end();
