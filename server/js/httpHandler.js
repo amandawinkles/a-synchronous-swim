@@ -22,34 +22,57 @@ var randomSwimCommand = () => {
 //trigger get request getting sent in from server
 module.exports.router = (req, res, next = ()=>{}) => { //request, response
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
+  //everything after slash is endpoint
+  //req.url --> verb & endpoint (verb = request type) (enpoint = /) (/ = root endpoint)
+  //url / = endpoint
+
+  //want to filter requests differently w/ endpoint of / and for background image
+
+  //endpoint vs file path
+  //create own endpoints
 
   if (req.method === 'GET') {
-    res.writeHead(200, headers);
-    //response.write sends back a chunk of the responsive body, may be called multiple x to provide successive parts of the body, takes in chunk, possibly encoding, callback- returns a boolean
-    //loop through messages, messageQueue.dequeue() for each element in messages array
-    //if messageQueue.dequeue() returns undefined, res.end()
-    //assign var to dequeue to use it
+    //create chunk to run for specific endpoint
+    if (req.url === '/') {
+      res.writeHead(200, headers);
+      for (var i = messageQueue.dequeue(); i !== undefined; i = messageQueue.dequeue()) {
+        res.write( i + ',');
+      }
+      res.end();
+      next();
+    } else if (req.url === '/background.jpg') {
 
-    for (var i = messageQueue.dequeue(); i !== undefined; i = messageQueue.dequeue()) {
-      res.write( i + ',');
+      console.log(exports.backgroundImageFile);
+      console.log(fs.existsSync(exports.backgroundImageFile));
+
+      if (fs.existsSync(exports.backgroundImageFile)) {
+        res.writeHead(200, headers);
+        res.end(); //pass in background image file
+        next();
+      } else {
+        res.writeHead(404, headers);
+        res.end();
+        next();
+      }
     }
-
-    // do {
-    //   i = i++;
-    //  i = messageQueue.dequeue()
-    // } while (i !== undefined)
-
-    res.end();
   } else if (req.method === 'OPTIONS') {
     res.writeHead(200, headers);
     res.end();
+    next();
   } else if (req.method === 'POST') {
     res.writeHead(200, headers);
     res.end();
+    next();
   } else {
     res.writeHead(200, headers);
     res.end();
+    next();
   }
 
   next(); // invoke next() at the end of a request to help with testing!
 };
+
+//response.write sends back a chunk of the responsive body, may be called multiple x to provide successive parts of the body, takes in chunk, possibly encoding, callback- returns a boolean
+//loop through messages, messageQueue.dequeue() for each element in messages array
+//if messageQueue.dequeue() returns undefined, res.end()
+//assign var to dequeue to use it

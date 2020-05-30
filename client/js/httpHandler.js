@@ -1,14 +1,15 @@
 (function() {
 
-  const serverUrl = 'http://127.0.0.1:3000';
+  const serverUrl = 'http://127.0.0.1:3000';//endpoint will be root, becuase no other endpoint has been added to url
 
-  //
+  //'http://127.0.0.1:3000/background.jpg' //now we have our endpoint for the image
+
   // TODO: build the swim command fetcher here
 
 
   //when keypress event, trigger GET request
   //in success, data will array, iterate through data array (or split if comes back as string), will call SwimTeam.move on each element
-  const getRequest = function() {
+  const getRequest = function() { //get request for swim command
     $.ajax({
       type: 'GET',
       url: serverUrl,
@@ -27,6 +28,7 @@
       error: () => {console.error('Failed the fetch request')}
     })
   }
+  //separate get request for background url
 
   //we need to create/use an event system instead of getting random commands
   setInterval(getRequest, 3000)
