@@ -8,7 +8,7 @@ const messageQueue = require('./messageQueue');
 module.exports.backgroundImageFile = path.join('.', 'background.jpg');
 ////////////////////////////////////////////////////////
 
-let messageQueue = null;
+//let messageQueue = null;
 //messageQueue used later to send commands to client
 module.exports.initialize = (queue) => {
   messageQueue = queue;
@@ -22,49 +22,78 @@ const getRandomCommands = () => {
 
 module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
-  /*
-  if (req.url === '/background.jpg') {
-    fs.readFile(module.exports.backgroundImageFile, (err, fileData) => {
-      if (err) {
-        res.writeHead(404);
-      } else {
-        res.writeHead(200, {
-          'Content-Type': 'image/jpeg',
-          'Content-Length': fileData.length
-        });
-        res.write(fileData, 'binary');
+
+  if (req.method === 'GET') {
+    //create chunk to run for specific endpoint
+    if (req.url === '/') {
+      res.writeHead(200, headers);
+      for (var i = messageQueue.dequeue(); i !== undefined; i = messageQueue.dequeue()) {
+        res.write( i + ',');
       }
       res.end();
       next();
-    });
-  }
+    } else if (req.url === '/background.jpg') {
 
-  */
+      console.log(exports.backgroundImageFile);
+      console.log(fs.existsSync(exports.backgroundImageFile));
 
-  // res.writeHead(200, headers);
-  // res.end();
-  // next(); // invoke next() at the end of a request to help with testing!
-
-  if (req.method === 'GET') {
-    res.writeHead(200, headers);
-    //res.write(messageQueue.dequeue());
-    res.end();
+      if (fs.existsSync(exports.backgroundImageFile)) {
+        var img = fs.readFileSync(exports.backgroundImageFile);
+        res.writeHead(200, {
+          'Content-Type': 'image/jpeg'
+          });
+        console.log(img);
+        res.end(img); //pass in background image file
+        next();
+      } else {
+        res.writeHead(404, headers);
+        res.end();
+        next();
+      }
+    }
   } else if (req.method === 'OPTIONS') {
-    //OPTIONS method for specifying capabilities for server
-    //response.writeHead takes in status code, possibly statusMessage, possibly headers- returns server response
     res.writeHead(200, headers);
     res.end();
-  //}
+    next();
+  } else if (req.method === 'POST') {
+    res.writeHead(200, headers);
+    res.end();
+    next();
+  } else {
+    res.writeHead(200, headers);
+    res.end();
+    next();
   }
-  // else if (req.method === 'POST') {
+
+  next(); // invoke next() at the end of a request to help with testing!
+  };
+
+  // if (req.method === 'GET') {
   //   res.writeHead(200, headers);
-  //   //res.end();
+  //   //res.write(messageQueue.dequeue());
+  //   res.end();
+  // } else if (req.method === 'OPTIONS') {
+  //   //OPTIONS method for specifying capabilities for server
+  //   //response.writeHead takes in status code, possibly statusMessage, possibly headers- returns server response
+  //   res.writeHead(200, headers);
+  //   res.end();
+  // //}
   // }
-  // invoke next() at the end of a request to help with testing!
-  next();
-};
+  // // else if (req.method === 'POST') {
+  // //   res.writeHead(200, headers);
+  // //   //res.end();
+  // // }
+  // // invoke next() at the end of a request to help with testing!
+  // next();
 
+//everything after slash is endpoint
+  //req.url --> verb & endpoint (verb = request type) (enpoint = /) (/ = root endpoint)
+  //url / = endpoint
 
+  //want to filter requests differently w/ endpoint of / and for background image
+
+  //endpoint vs file path
+  //create own endpoints
 
 //response.write sends back a chunk of the responsive body, may be called multiple x to provide successive parts of the body, takes in chunk, possibly encoding, callback- returns a boolean
 //res.write(messageQueue.dequeue());
@@ -87,4 +116,22 @@ module.exports.router = (req, res, next = ()=>{}) => {
     res.end();
   }
 };
-*/
+
+ /*
+  if (req.url === '/background.jpg') {
+    fs.readFile(module.exports.backgroundImageFile, (err, data) => {
+      if (err) {
+        res.writeHead(404);
+      } else {
+        res.writeHead(200, {
+          'Content-Type': 'image/jpeg',
+          'Content-Length': data.length
+        });
+        res.write(data);
+      }
+      res.end();
+      next();
+    });
+  }
+
+  */

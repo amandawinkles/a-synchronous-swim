@@ -1,35 +1,51 @@
+//const path = require('path');
+
+
 (function() {
 
   const serverUrl = 'http://127.0.0.1:3000';
+
+  //'http://127.0.0.1:3000/background.jpg' //now we have our endpoint for the image
 
   // const swimDirections = ['up','down','left','right'];
   // const getRandomCommands = () => {
   //   return swimDirections[Math.floor(Math.random() * 4)];
   // };
 
-  //build the swim command fetcher here
+  //build request that contacts server, asks for swim command, when command is passed back to client, it's given to swim team
   //setInterval to periodically request a random swim command from the server
-  //setInterval(() => {
-  const getSwimCommand = () => {
-    //build request that contacts server, asks for swim command, when command is passed back to client, it's given to swim team
+  //separate get request for background url
+  const getRequest = function(endpoint) {
+    console.log(endpoint);
+    console.log(serverUrl + endpoint);
+    //endpoint = endpoint || '';
     $.ajax({
-      url: serverUrl,
+      url: serverUrl + endpoint, //serverUrl + endpoint
       type: 'GET',
       contentType: 'application/json',
       success: (data) => {
-        SwimTeam.move(data);
+        var commands = data.split(',')
+
+        _.each(commands, function(currentValue) {
+          SwimTeam.move(currentValue)
+        });
+
         console.log('successfully fetched swim command');
       },
       error: () => {
         console.error('failed to fetch request');
       }
     })
-  }
-  //}, 100);
+  };
 
-  $('.get-swim-command').on('click', function() {
-    getSwimCommand();
-  });
+  console.log(getRequest('/background.jpg'));
+  //setInterval(getRequest, 3000, '/background.jpg');
+  setInterval(function() {
+    getRequest('');
+    getRequest('/background.jpg');
+  }, 3000);
+  //setInterval(getRequest, 3000, '');
+  //setInterval(getRequest, 3000);
 
 
   /////////////////////////////////////////////////////////////////////
@@ -73,5 +89,3 @@
   });
 
 })();
-
-//export default
