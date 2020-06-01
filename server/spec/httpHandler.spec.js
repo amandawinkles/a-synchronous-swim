@@ -18,38 +18,22 @@ describe('server responses', () => {
     done();
   });
 
-<<<<<<< HEAD
-  it('should respond to a GET request for a swim command', (done) => {
-    let {req, res} = server.mock('/', 'GET'); //endpoint, verb
-
-    var commands = ['up', 'left', 'right', 'down'];
-=======
   it('should respond to a GET request for a swim command', (done) => { //test mimics client to make sure gets back what's expected w/GET request
-    let {req, res} = server.mock('/', 'GET');
+    let {req, res} = server.mock('/', 'GET'); //endpoint, verb
     const swimDirections = ['up','down','left','right'];
->>>>>>> 30e309a8b5a4ddb0b2f48ae62b4e1550eaea7202
 
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
-<<<<<<< HEAD
-    // expect(res._data.toString()).to.not.be.empty;
-    // expect(commands.includes(res._data.toString())).to.equal(true);
-=======
     expect(res._data.toString()).to.not.be.empty;
     expect(swimDirections).to.contain(res._data.toString());
->>>>>>> 30e309a8b5a4ddb0b2f48ae62b4e1550eaea7202
 
     done();
   });
 
   it('should respond with 404 to a GET request for a missing background image', (done) => {
     httpHandler.backgroundImageFile = path.join('.', 'spec', 'missing.jpg');
-<<<<<<< HEAD
-    let {req, res} = server.mock('/background.jpg', 'GET');
-=======
     let {req, res} = server.mock('/background.jpg', 'GET'); //httpHandler.backgroundImageFile
->>>>>>> 30e309a8b5a4ddb0b2f48ae62b4e1550eaea7202
 
     httpHandler.router(req, res, () => {
       expect(res._responseCode).to.equal(404);
@@ -60,19 +44,11 @@ describe('server responses', () => {
 
   it('should respond with 200 to a GET request for a present background image', (done) => {
     httpHandler.backgroundImageFile = path.join('.', 'spec', 'water-lg.jpg');
-<<<<<<< HEAD
-    let {req, res} = server.mock('/background.jpg', 'GET');
-=======
     let {req, res} = server.mock('/background.jpg', 'GET'); //httpHandler.backgroundImageFile
->>>>>>> 30e309a8b5a4ddb0b2f48ae62b4e1550eaea7202
 
     httpHandler.router(req, res, () => {
       expect(res._responseCode).to.equal(200);
       expect(res._ended).to.equal(true);
-<<<<<<< HEAD
-=======
-
->>>>>>> 30e309a8b5a4ddb0b2f48ae62b4e1550eaea7202
       done();
     });
   });
