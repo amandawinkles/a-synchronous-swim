@@ -1,6 +1,3 @@
-//const path = require('path');
-
-
 (function() {
 
   const serverUrl = 'http://127.0.0.1:3000';
@@ -39,13 +36,14 @@
   };
 
   console.log(getRequest('/background.jpg'));
-  //setInterval(getRequest, 3000, '/background.jpg');
   setInterval(function() {
     getRequest('');
     getRequest('/background.jpg');
   }, 3000);
+
   //setInterval(getRequest, 3000, '');
   //setInterval(getRequest, 3000);
+  //setInterval(getRequest, 3000, '/background.jpg');
 
 
   /////////////////////////////////////////////////////////////////////
