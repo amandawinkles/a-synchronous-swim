@@ -4,6 +4,7 @@
 
   //'http://127.0.0.1:3000/background.jpg' //now we have our endpoint for the image
 
+<<<<<<< HEAD
   // TODO: build the swim command fetcher here
 
 
@@ -16,10 +17,32 @@
       success: (data) => {
         console.log(data)
 
+=======
+  //'http://127.0.0.1:3000/background.jpg' //now we have our endpoint for the image
+
+  // const swimDirections = ['up','down','left','right'];
+  // const getRandomCommands = () => {
+  //   return swimDirections[Math.floor(Math.random() * 4)];
+  // };
+
+  //build request that contacts server, asks for swim command, when command is passed back to client, it's given to swim team
+  //setInterval to periodically request a random swim command from the server
+  //separate get request for background url
+  const getRequest = function(endpoint) {
+    console.log(endpoint);
+    console.log(serverUrl + endpoint);
+    //endpoint = endpoint || '';
+    $.ajax({
+      url: serverUrl + endpoint, //serverUrl + endpoint
+      type: 'GET',
+      contentType: 'application/json',
+      success: (data) => {
+>>>>>>> 30e309a8b5a4ddb0b2f48ae62b4e1550eaea7202
         var commands = data.split(',')
 
         _.each(commands, function(currentValue) {
           SwimTeam.move(currentValue)
+<<<<<<< HEAD
         })
 
         // SwimTeam.move(data);
@@ -34,6 +57,28 @@
   //we need to create/use an event system instead of getting random commands
   console.log(getRequest('/background.jpg'));
   setInterval(getRequest, 3000)
+=======
+        });
+
+        console.log('successfully fetched swim command');
+      },
+      error: () => {
+        console.error('failed to fetch request');
+      }
+    })
+  };
+
+  console.log(getRequest('/background.jpg'));
+  setInterval(function() {
+    getRequest('');
+    getRequest('/background.jpg');
+  }, 3000);
+
+  //setInterval(getRequest, 3000, '');
+  //setInterval(getRequest, 3000);
+  //setInterval(getRequest, 3000, '/background.jpg');
+
+>>>>>>> 30e309a8b5a4ddb0b2f48ae62b4e1550eaea7202
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
@@ -46,7 +91,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'FILL_ME_IN',
+      url: 'serverUrl',
       cache: false,
       contentType: false,
       processData: false,

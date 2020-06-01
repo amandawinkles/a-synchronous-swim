@@ -43,8 +43,11 @@ module.exports.initialize = (callback) => {
       return; // don't do any more processing on this key
     }
 
+<<<<<<< HEAD
     //[NOTE TO SELF FOR LATER] update to enqueue key for messageQueue
 
+=======
+>>>>>>> 30e309a8b5a4ddb0b2f48ae62b4e1550eaea7202
     // otherwise build up a message from individual characters
     if (key && (key.name === 'return' || key.name === 'enter')) {
       // on enter, process the message

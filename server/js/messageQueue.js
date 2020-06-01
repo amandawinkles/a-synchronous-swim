@@ -7,5 +7,16 @@ module.exports.enqueue = (message) => {
 
 module.exports.dequeue = () => {
   // returns undefined if messages array is empty
-  return messages.shift();
+  if (messages.length === 0) {
+    return '';
+  } else {
+    return messages.shift();
+  }
+};
+
+//export default messages;
+//module.exports.messages;
+
+module.exports.getMessages = () => {
+  return messages[0];
 };
